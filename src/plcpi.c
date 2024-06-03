@@ -25,7 +25,7 @@
 
 #define VERSION_BASE	(int)1
 #define VERSION_MAJOR	(int)1
-#define VERSION_MINOR	(int)0
+#define VERSION_MINOR	(int)1
 
 #define UNUSED(X) (void)X      /* To avoid gcc/g++ warnings */
 
@@ -1558,7 +1558,7 @@ int encSetThreshold(int dev, int ch, unsigned int val)
 	u8 buff[5] = {0, 0, 0, 0, 0};
 	u32 raw = 0;
 
-	if ( (ch < CHANNEL_NR_MIN) || (ch > OD_CH_NR_MAX)) //
+	if ( (ch < 0) || (ch > OD_CH_NR_MAX)) //
 	{
 		printf("Open drain channel out of range!\n");
 		return ERROR;
@@ -1572,7 +1572,10 @@ int encSetThreshold(int dev, int ch, unsigned int val)
 		printf("Fail to write!\n");
 		return ERROR;
 	}
-
+	if(0 == ch)
+	{
+		printf("Disable threshold reset function\n");
+	}
 	return OK;
 }
 
